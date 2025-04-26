@@ -1,22 +1,30 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import heartRateVideo from "./heartrate.mp4";
+import AlarmSelector from "./AlarmSelector";
+import alarmTone1 from './alarmTone1.mp3';
 
 function App() {
   const baselineHR = 90;
   const dropThreshold = 0.1;
   const [heartRate, setHeartRate] = useState(baselineHR);
   const [alerted, setAlerted] = useState(false);
+  const [selectedSound, setSelectedSound] = useState(null);
 
   useEffect(() => {
     const percentDrop = (baselineHR - heartRate) / baselineHR;
     if (percentDrop >= dropThreshold && !alerted) {
       setAlerted(true);
       alert("⚠️ Drowsiness Detected!");
-      const audio = new Audio(
-        "https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg"
-      );
-      audio.play();
+      if(selectedSound != null) // if there is a sound specifically selected by the user
+      {
+        const audio = new Audio(selectedSound);
+        audio.play();
+      }
+      else{ // or the default tone
+        const audio = new Audio(alarmTone1);
+        audio.play();
+      }
     }
     if (percentDrop < dropThreshold) {
       setAlerted(false);
@@ -46,6 +54,7 @@ function App() {
           <button onClick={() => handleHRChange(1)}>▲</button>
           <button onClick={() => handleHRChange(-1)}>▼</button>
         </div>
+        <AlarmSelector setSound={setSelectedSound}/>
       </div>
       <div className="info-section">
         <p>
