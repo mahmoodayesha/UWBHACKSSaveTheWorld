@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import heartRateVideo from "./heartrate.mp4";
 import AlarmSelector from "./AlarmSelector";
-import alarmTone1 from './alarmTone1.mp3';
 import RestAreaFinder from './RestAreaFinder';
 
 function App() {
   // const baselineHR = 90;
+
+  const alarmTone1 = '/alarmTone1.mp3';
   const dropThreshold = 0.1;
   const [heartRate, setHeartRate] = useState(70);
   const [alerted, setAlerted] = useState(false);
