@@ -1,11 +1,13 @@
 // AlarmSelector.jsx
 import {useState} from 'react';
-import alarmTone1 from './alarmTone1.mp3';
-import alarmTone2 from './alarmTone2.mp3';
-import alarmTone3 from './alarmTone3.mp3';
+
 
 function AlarmSelector({ setSound }) {
   const [showOptions, setShowOptions] = useState(false);
+  const alarmTone1 = '/alarmTone1.mp3';
+  const alarmTone2 = '/alarmTone2.mp3';
+  const alarmTone3 = '/alarmTone3.mp3';
+
 
   const sounds = [
     { name: 'Beep', file: alarmTone1 },
