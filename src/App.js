@@ -109,7 +109,7 @@ function App() {
           Drowsy Driving Detected!
         </div>
       )}
-      <div style={{ marginTop: '-300px', marginLeft: '300px' }}>
+      <div style={{ marginTop: '-300px', marginLeft: '140px' }}>
       <div style={{ padding: '20px' }}>
       {/* Input for heart rate */}
       <div>
