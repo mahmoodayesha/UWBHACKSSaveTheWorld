@@ -28,7 +28,7 @@ function AlarmSelector({ setSound }) {
         <div style={{ marginTop: '10px' }}>
           {sounds.map((sound, index) => (
             <div key={index}>
-              <button onClick={() => handleSelectSound(sound.file)}>
+              <button className='buttons2' onClick={() => handleSelectSound(sound.file)}>
                 {sound.name}
               </button>
             </div>

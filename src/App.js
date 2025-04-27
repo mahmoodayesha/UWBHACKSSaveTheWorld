@@ -10,20 +10,26 @@ function App() {
   const [heartRate, setHeartRate] = useState(baselineHR);
   const [alerted, setAlerted] = useState(false);
   const [selectedSound, setSelectedSound] = useState(null);
+  const [alertVisible, setAlertVisible] = useState(false); // state to control the alert
+  const [isSimulating, setIsSimulating] = useState(false);
+  const [inputHeartRate, setInputHeartRate] = useState(70); // To hold the user input
 
   useEffect(() => {
     const percentDrop = (baselineHR - heartRate) / baselineHR;
     if (percentDrop >= dropThreshold && !alerted) {
       setAlerted(true);
-      alert("⚠️ Drowsiness Detected!");
       if(selectedSound != null) // if there is a sound specifically selected by the user
       {
         const audio = new Audio(selectedSound);
         audio.play();
+        setAlertVisible(true); // Show alert when drowsy driving is detected
+        setTimeout(() => setAlertVisible(false), 5000); // Hide alert after 5 seconds
       }
       else{ // or the default tone
         const audio = new Audio(alarmTone1);
         audio.play();
+        setAlertVisible(true); // Show alert when drowsy driving is detected
+        setTimeout(() => setAlertVisible(false), 5000); // Hide alert after 5 seconds
       }
     }
     if (percentDrop < dropThreshold) {
@@ -33,6 +39,37 @@ function App() {
 
   const handleHRChange = (delta) => {
     setHeartRate((prev) => Math.max(30, prev + delta));
+  };
+
+  // Function to simulate heart rate changes
+  const startSimulation = () => {
+    setIsSimulating(true);
+    const interval = setInterval(() => {
+      // Randomly increase or decrease the heart rate
+      setHeartRate(prevRate => prevRate + (Math.random() > 0.5 ? 0 : -1));
+    }, 500); // every second
+    
+    // Stop the simulation after 10 seconds
+    setTimeout(() => {
+      clearInterval(interval);
+      setIsSimulating(false);
+    }, 10000); // 10 seconds
+  };
+
+  const handleInputChange = (event) => {
+    // Update the heart rate input value
+    setInputHeartRate(parseInt(event.target.value));
+  };
+
+  const handleSubmitHeartRate = (event) => {
+    // event.preventDefault();
+    // Set the heart rate to the input value when the user submits
+    setHeartRate(parseInt(inputHeartRate));
+  };
+
+  const handleButtonClick = () => {
+    handleSubmitHeartRate();  // Submit the heart rate input
+    startSimulation();        // Start the simulation
   };
 
   return (
@@ -56,6 +93,50 @@ function App() {
         </div>
         <AlarmSelector setSound={setSelectedSound}/>
       </div>
+        {/* Alert message */}
+        {alertVisible && (
+        <div style={{
+          position: 'fixed', 
+          top: '130px', 
+          left: '50%', 
+          transform: 'translateX(-50%)', 
+          backgroundColor: 'red', 
+          color: 'white', 
+          padding: '10px 20px', 
+          borderRadius: '5px',
+          fontSize: '35px'
+        }}>
+          Drowsy Driving Detected!
+        </div>
+      )}
+      <div style={{ marginTop: '-300px', marginLeft: '300px' }}>
+      <div style={{ padding: '20px' }}>
+      {/* Input for heart rate */}
+      <div>
+      <label htmlFor="heartRateInput" style={{ fontSize: '20px' }}>Enter Resting Heart Rate:</label>
+        <input
+          id="heartRateInput"
+          type="number"
+          value={inputHeartRate}
+          onChange={handleInputChange}
+          min="40" // Set minimum limit for heart rate
+          max="200" // Set maximum limit for heart rate
+          disabled={isSimulating} // Disable input while simulating
+        />
+      </div>
+
+      {/* Button to start simulation */}
+      <button
+        className="buttons3"
+        onClick={ handleButtonClick}
+        disabled={isSimulating}
+      >
+        Start Simulation
+      </button>
+      
+      {isSimulating && <p>Simulation is running...</p>}
+    </div>
+    </div>
       <div className="info-section">
         <p>
           <strong>Safe Driving Buddy</strong> is an app designed to help prevent
