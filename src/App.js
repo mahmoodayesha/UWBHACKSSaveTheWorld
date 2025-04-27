@@ -3,6 +3,7 @@ import "./App.css";
 import heartRateVideo from "./heartrate.mp4";
 import AlarmSelector from "./AlarmSelector";
 import alarmTone1 from './alarmTone1.mp3';
+import RestAreaFinder from './RestAreaFinder';
 
 function App() {
   // const baselineHR = 90;
@@ -137,24 +138,26 @@ function App() {
       </button>
       
       {isSimulating && <p>Simulation is running...</p>}
+      <RestAreaFinder />
+
     </div>
     </div>
       <div className="info-section">
         <p>
-          <strong>Safe Driving Buddy</strong> is an app designed to help prevent
+        Research shows that every hour, someone dies in a traffic accident in the US due to a fatigue-related error, making it crucial to address this risk.<strong>Safe Driving Buddy</strong> is an app designed to help prevent
           drowsy driving by monitoring your heart rate through a smartwatch.
           Research shows that a drop of around 10% in your heart rate can
           indicate drowsiness or microsleep, which can be dangerous while
           driving. The working demo on this website showcases how the app works
           by simulating a smartwatch display. In the demo, the user's average
           resting heart rate is set to specific number entered. If the heart rate drops by 10% or
-          more, the system triggers an alert. You can interact with the demo by
+          more, the system triggers an alert sound.These sounds are customizable & created with specifc frequency backed by research for alertness. You can interact with the demo by
           adjusting the heart rate, and when it decreases below the set
           threshold, the alert system activates, simulating how the app would
           function in a real-world driving scenario. This demonstration shows
           how the app monitors heart rate in real-time and sends an alert to
           warn the driver about potential drowsiness, helping to prevent
-          fatigue-related accidents.
+          fatigue-related accidents.The demo also uses the Google Maps API to show nearby rest places. Future versions will offer personalized suggestions based on user conversations. The app will ask questions like "How are you feeling?" or "Do you need help?" and provide tailored recommendations. For example, it will suggest rest areas if you're tired, restaurants if you're hungry, or coffee shops if you're sleepy. In critical situations, it will recommend calling 911 for emergency help. This dynamic interaction ensures the app monitors drowsiness and responds to the user's real-time needs.
     <br />
     <br />
     <small style={{ color: 'red' }}>
