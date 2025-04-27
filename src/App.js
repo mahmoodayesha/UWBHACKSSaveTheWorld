@@ -5,9 +5,9 @@ import AlarmSelector from "./AlarmSelector";
 import alarmTone1 from './alarmTone1.mp3';
 
 function App() {
-  const baselineHR = 90;
+  // const baselineHR = 90;
   const dropThreshold = 0.1;
-  const [heartRate, setHeartRate] = useState(baselineHR);
+  const [heartRate, setHeartRate] = useState(70);
   const [alerted, setAlerted] = useState(false);
   const [selectedSound, setSelectedSound] = useState(null);
   const [alertVisible, setAlertVisible] = useState(false); // state to control the alert
@@ -15,7 +15,9 @@ function App() {
   const [inputHeartRate, setInputHeartRate] = useState(70); // To hold the user input
 
   useEffect(() => {
-    const percentDrop = (baselineHR - heartRate) / baselineHR;
+    const baselineHR = inputHeartRate; // using the user's input as the baseline
+    const percentDrop = (baselineHR  - heartRate) / baselineHR ;  // using inputHeartRate as baseline
+
     if (percentDrop >= dropThreshold && !alerted) {
       setAlerted(true);
       if(selectedSound != null) // if there is a sound specifically selected by the user
@@ -145,7 +147,7 @@ function App() {
           indicate drowsiness or microsleep, which can be dangerous while
           driving. The working demo on this website showcases how the app works
           by simulating a smartwatch display. In the demo, the user's average
-          resting heart rate is set to 90. If the heart rate drops by 10% or
+          resting heart rate is set to specific number entered. If the heart rate drops by 10% or
           more, the system triggers an alert. You can interact with the demo by
           adjusting the heart rate, and when it decreases below the set
           threshold, the alert system activates, simulating how the app would
